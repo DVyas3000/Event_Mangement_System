@@ -481,7 +481,9 @@ const OrganizerDashboard = () => {
     return num.toLocaleString('en-IN');
   };
 
-  const isDateOnly = (v) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v);
+  const isDateOnly = useCallback((v) => {
+    return typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v);
+  }, []);
 
   const toStartMs = useCallback((v) => {
     if (!v) return NaN;
