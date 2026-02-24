@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api, { organizerAPI, teamAPI } from '../../services/api';
+import { organizerAPI, teamAPI } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import './OrganizerDashboard.css';
 import './OrganizerOngoing.css';
 
 const OrganizerOngoing = () => {
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const [events, setEvents] = useState([]);

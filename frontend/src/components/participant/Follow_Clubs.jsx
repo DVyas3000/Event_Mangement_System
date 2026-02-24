@@ -4,7 +4,7 @@ import './Follow_Clubs.css';
 import api from '../../services/api';
 
 const FollowClubs = () => {
-  const [followedcLUBS, setfollowedClubs]=useState([]);
+  const [, setfollowedClubs] = useState([]);
   const [clubs, setClubs] = useState([]);
   const [selectedClubs, setSelectedClubs] = useState([]);
   const [loading, setLoading] = useState(true);

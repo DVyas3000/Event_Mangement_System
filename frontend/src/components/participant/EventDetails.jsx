@@ -348,7 +348,6 @@ const TeamRegistrationModal = ({ event, onClose, onSuccess }) => {
 const EventDetails = () => {
   const { eventId } = useParams();
   const navigate    = useNavigate();
-  const { user: _user }    = useAuth();
 
   const [event, setEvent]                         = useState(null);
   const [loading, setLoading]                     = useState(true);
