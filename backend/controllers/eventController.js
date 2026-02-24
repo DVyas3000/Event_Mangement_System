@@ -20,13 +20,7 @@ const createTransporter = () => {
 const generateQRCode = async (ticketData) => {
   try {
     const qrString = JSON.stringify(ticketData);
-    const qrDataUrl = await QRCode.toDataURL(qrString, {
-      errorCorrectionLevel: 'H',
-      type: 'image/png',
-      quality: 0.92,
-      margin: 1,
-      width: 256
-    });
+    const qrDataUrl = await QRCode.toDataURL(qrString);
     return qrDataUrl;
   } catch (err) {
     console.error('QR generation error:', err);

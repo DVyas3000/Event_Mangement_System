@@ -78,7 +78,13 @@ exports.login = async (req, res) => {
     if (userRole === 'organizer' && user && !user.isActive)
       return res.status(403).json({ success: false, message: 'Your account has been deactivated. Please contact admin.' });
 
-    if (!user || !await user.comparePassword(password))
+    if (!user) {
+      console.log('[LOGIN DEBUG] No user found for email:', email, 'role:', role);
+      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+    }
+    const passwordMatch = await user.comparePassword(password);
+    console.log('[LOGIN DEBUG] email:', email, '| role:', role, '| passwordMatch:', passwordMatch, '| hash prefix:', user.password?.substring(0,10));
+    if (!passwordMatch)
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
 
     const token = generateToken(user._id, userRole);

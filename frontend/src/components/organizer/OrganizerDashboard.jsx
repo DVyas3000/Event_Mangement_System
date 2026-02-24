@@ -1119,151 +1119,116 @@ const getPrettyStatus = useCallback((event) => {
       {/* ================= ANALYZE / ATTENDANCE MODAL ================= */}
       {showAnalyzeModal && (
         <div className="modal-overlay" onClick={() => { stopCameraScan(); setShowAnalyzeModal(false); }}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content" style={{ maxWidth: 560 }} onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>{analyzeEvent?.name || 'Event'} {'\u2014'} Attendance</h2>
-              <button className="modal-close" onClick={() => { stopCameraScan(); setShowAnalyzeModal(false); }}>{'\u00D7'}</button>
+              <h2>Attendance — {analyzeEvent?.name || 'Event'}</h2>
+              <button className="modal-close" onClick={() => { stopCameraScan(); setShowAnalyzeModal(false); }}>×</button>
             </div>
 
-            <div className="modal-body" style={{ maxHeight: 520, overflowY: 'auto' }}>
-              {analyzeError && (
-                <div className="od-alert od-alert-error" style={{ marginBottom: 12 }}>
-                  {analyzeError}
-                </div>
-              )}
+            <div className="modal-body" style={{ maxHeight: 560, overflowY: 'auto' }}>
+              {analyzeError && <div className="od-alert od-alert-error" style={{ marginBottom: 12 }}>{analyzeError}</div>}
 
-              {analyzeLoading || !analyzeEvent ? (
-                <p>Loading...</p>
-              ) : (
-                <>
-                  <div className="od-event-meta" style={{ marginBottom: 12 }}>
-                    <div className="od-meta-chip">
-                      <span className="od-meta-ico" aria-hidden="true">{'\u{1F465}'}</span>
-                      <span>{analyzeEvent.participants.length} registered</span>
+              {analyzeLoading || !analyzeEvent ? <p>Loading...</p> : (() => {
+                const isOngoing = getPrettyStatus(analyzeEvent) === 'Ongoing';
+                const attended  = analyzeEvent.participants.filter(p => p.attended).length;
+                const total     = analyzeEvent.participants.length;
+                return (
+                  <>
+                    {/* Stats row */}
+                    <div style={{ display: 'flex', gap: 12, marginBottom: 18 }}>
+                      {[
+                        { label: 'Registered', value: total },
+                        { label: 'Attended',   value: attended },
+                        { label: 'Remaining',  value: total - attended },
+                      ].map(s => (
+                        <div key={s.label} style={{ flex: 1, background: '#f8f9fa', borderRadius: 8, padding: '10px 14px', textAlign: 'center' }}>
+                          <div style={{ fontSize: 22, fontWeight: 700 }}>{s.value}</div>
+                          <div style={{ fontSize: 12, color: '#6b7280' }}>{s.label}</div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="od-meta-chip">
-                      <span className="od-meta-ico" aria-hidden="true">{'\u2705'}</span>
-                      <span>
-                        {analyzeEvent.participants.filter(p => p.attended).length} attended
-                      </span>
-                    </div>
-                    <div className="od-meta-chip">
-                      <span className="od-meta-ico" aria-hidden="true">{'\u20B9'}</span>
-                      <span>{'\u20B9'}{formatMoney(analyzeEvent.analytics?.totalRevenue || 0)}</span>
-                    </div>
-                  </div>
 
-                  {scanMessage && <div className="od-alert" style={{ marginBottom: 12 }}>{scanMessage}</div>}
+                    {/* Scan status message */}
+                    {scanMessage && (
+                      <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 8, padding: '8px 12px', marginBottom: 12, fontSize: 13, color: '#166534' }}>
+                        {scanMessage}
+                      </div>
+                    )}
 
-                  <div className="od-event-meta" style={{ marginBottom: 12 }}>
-                    {getPrettyStatus(analyzeEvent) === 'Ongoing' && (
+                    {isOngoing && (
                       <>
-                        <button className="od-btn od-btn-primary" onClick={cameraActive ? stopCameraScan : startCameraScan}>
-                          {cameraActive ? 'Stop Camera' : 'Start Camera Scan'}
-                        </button>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileScan(e.target.files?.[0])}
-                        />
+                        {/* Camera viewfinder */}
+                        <div style={{ marginBottom: 14, display: cameraActive ? 'block' : 'none' }}>
+                          <div className="qr-viewfinder">
+                            <video ref={videoRef} className="qr-video" autoPlay playsInline muted />
+                            <div className="qr-overlay">
+                              <div className="qr-corner qr-tl" /><div className="qr-corner qr-tr" />
+                              <div className="qr-corner qr-bl" /><div className="qr-corner qr-br" />
+                              <div className="qr-laser" />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Action buttons */}
+                        <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+                          <button className="od-btn od-btn-primary" style={{ flex: 1 }} onClick={cameraActive ? stopCameraScan : startCameraScan}>
+                            {cameraActive ? 'Stop Camera' : 'Scan QR'}
+                          </button>
+                          <label className="od-btn od-btn-ghost" style={{ flex: 1, cursor: 'pointer', textAlign: 'center' }}>
+                            Upload QR Image
+                            <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleFileScan(e.target.files?.[0])} />
+                          </label>
+                        </div>
+
+                        {/* Manual entry */}
+                        <div style={{ background: '#f8f9fa', borderRadius: 8, padding: '12px 14px', marginBottom: 14 }}>
+                          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8, color: '#374151' }}>Manual Entry</div>
+                          <div style={{ display: 'flex', gap: 8 }}>
+                            <input
+                              type="text"
+                              placeholder="Ticket ID"
+                              value={manualTicketId}
+                              onChange={(e) => setManualTicketId(e.target.value)}
+                              style={{ flex: 1, padding: '7px 10px', border: '1px solid #d1d5db', borderRadius: 6, fontSize: 13 }}
+                            />
+                            <button className="od-btn od-btn-primary" style={{ whiteSpace: 'nowrap' }} onClick={() => overrideAttendance('mark')}>✓ Mark</button>
+                            <button className="od-btn od-btn-ghost" style={{ whiteSpace: 'nowrap' }} onClick={() => overrideAttendance('unmark')}>✗ Unmark</button>
+                          </div>
+                        </div>
                       </>
                     )}
-                    <button className="od-btn od-btn-ghost" onClick={exportAttendance}>
-                      Export CSV
-                    </button>
-                  </div>
 
-                  {/* Video always rendered so DOM ref exists before stream is assigned */}
-                  {getPrettyStatus(analyzeEvent) === 'Ongoing' && (
-                    <div className="qr-viewfinder-wrap" style={{ marginBottom: 16, display: cameraActive ? 'flex' : 'none' }}>
-                      <div className="qr-viewfinder">
-                        <video
-                          ref={videoRef}
-                          className="qr-video"
-                          autoPlay
-                          playsInline
-                          muted
-                        />
-                        <div className="qr-overlay">
-                          <div className="qr-corner qr-tl" />
-                          <div className="qr-corner qr-tr" />
-                          <div className="qr-corner qr-bl" />
-                          <div className="qr-corner qr-br" />
-                          <div className="qr-laser" />
-                        </div>
-                        <div className="qr-hint">Point the QR code at the camera</div>
-                      </div>
+                    {/* Participants list */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                      <span style={{ fontWeight: 600, fontSize: 14 }}>Participants</span>
+                      <button className="od-btn od-btn-ghost" style={{ fontSize: 12, padding: '4px 10px' }} onClick={exportAttendance}>Export CSV</button>
                     </div>
-                  )}
 
-                  {getPrettyStatus(analyzeEvent) === 'Ongoing' && (
-                    <div className="od-card" style={{ padding: 12, marginBottom: 16 }}>
-                      <h3 style={{ marginTop: 0 }}>Manual Attendance</h3>
-                      <div className="od-qa-actions" style={{ gap: 8 }}>
-                        <input
-                          type="text"
-                          placeholder="Ticket ID"
-                          value={manualTicketId}
-                          onChange={(e) => setManualTicketId(e.target.value)}
-                        />
-                        <input
-                          type="text"
-                          placeholder="Note (optional)"
-                          value={manualNote}
-                          onChange={(e) => setManualNote(e.target.value)}
-                        />
-                        <button className="od-btn od-btn-primary" onClick={() => overrideAttendance('mark')}>
-                          Mark Attended
-                        </button>
-                        <button className="od-btn od-btn-ghost" onClick={() => overrideAttendance('unmark')}>
-                          Unmark
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="od-card" style={{ padding: 12 }}>
-                    <h3 style={{ marginTop: 0 }}>Participants</h3>
-                    {analyzeEvent.participants.length === 0 ? (
-                      <p>No registrations yet.</p>
+                    {total === 0 ? (
+                      <p style={{ color: '#9ca3af', fontSize: 13 }}>No registrations yet.</p>
                     ) : (
-                      <div className="od-event-list">
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                         {analyzeEvent.participants.map((p) => (
-                          <div key={p.ticketId} className="od-event-item">
-                            <div className="od-event-top">
-                              <div className="od-event-title-row">
-                                <h3 className="od-event-title">
-                                  {p.user?.firstName} {p.user?.lastName}
-                                </h3>
-                                <div className="od-event-badges">
-                                  <span className={`od-badge ${p.attended ? 'badge-published' : 'badge-upcoming'}`}>
-                                    {p.attended ? 'Scanned' : 'Not Scanned'}
-                                  </span>
-                                </div>
-                              </div>
+                          <div key={p.ticketId} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', background: p.attended ? '#f0fdf4' : '#fff', border: `1px solid ${p.attended ? '#bbf7d0' : '#e5e7eb'}`, borderRadius: 8 }}>
+                            <div style={{ flex: 1 }}>
+                              <div style={{ fontWeight: 600, fontSize: 13 }}>{p.user?.firstName} {p.user?.lastName}</div>
+                              <div style={{ fontSize: 11, color: '#6b7280' }}>{p.ticketId} · {p.user?.email}</div>
                             </div>
-                            <div className="od-event-meta">
-                              <div className="od-meta-chip">
-                                <span>{p.ticketId}</span>
-                              </div>
-                              <div className="od-meta-chip">
-                                <span>{p.user?.email}</span>
-                              </div>
-                              <div className="od-meta-chip">
-                                <span>{p.attendedAt ? formatDateTime(p.attendedAt) : '\u2014'}</span>
-                              </div>
-                            </div>
+                            <span style={{ fontSize: 11, fontWeight: 600, color: p.attended ? '#166534' : '#9ca3af', background: p.attended ? '#dcfce7' : '#f3f4f6', padding: '2px 8px', borderRadius: 12 }}>
+                              {p.attended ? '✓ Attended' : 'Pending'}
+                            </span>
                           </div>
                         ))}
                       </div>
                     )}
-                  </div>
-                </>
-              )}
+                  </>
+                );
+              })()}
             </div>
           </div>
         </div>
       )}
+
 
       {/* ================= PASSWORD RESET REQUEST MODAL ================= */}
       {showResetModal && (

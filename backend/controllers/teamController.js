@@ -18,9 +18,7 @@ const createTransporter = () =>
 
 const generateQR = async (data) => {
   try {
-    return await QRCode.toDataURL(JSON.stringify(data), {
-      errorCorrectionLevel: 'H', width: 256, margin: 1
-    });
+    return await QRCode.toDataURL(JSON.stringify(data));
   } catch { return null; }
 };
 

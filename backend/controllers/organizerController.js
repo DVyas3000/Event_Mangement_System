@@ -89,18 +89,21 @@ exports.updateProfile = async (req, res) => {
       });
     }
 
-    if (name) organizer.name = name;
-    if (description !== undefined) organizer.description = description;
-    if (contactEmail !== undefined) organizer.contactEmail = contactEmail;
-    if (contactNumber !== undefined) organizer.contactNumber = contactNumber;
-    if (discordWebhook !== undefined) organizer.discordWebhook = discordWebhook;
+    const updates = {};
+    if (name) updates.name = name;
+    if (description !== undefined) updates.description = description;
+    if (contactEmail !== undefined) updates.contactEmail = contactEmail;
+    if (contactNumber !== undefined) updates.contactNumber = contactNumber;
+    if (discordWebhook !== undefined) updates.discordWebhook = discordWebhook;
 
-    await organizer.save();
+    // Use updateOne to avoid triggering pre-save password hash hook
+    await Organizer.updateOne({ _id: req.user._id }, updates);
+    const updatedOrganizer = await Organizer.findById(req.user._id).select('-password');
 
     res.status(200).json({
       success: true,
       message: 'Profile updated successfully',
-      profile: organizer
+      profile: updatedOrganizer
     });
   } catch (error) {
     console.error('Update Profile Error:', error);
@@ -149,8 +152,8 @@ exports.changePassword = async (req, res) => {
       });
     }
 
-    organizer.password = newPassword;
-    await organizer.save();
+    const hashedPassword = await bcrypt.hash(newPassword, await bcrypt.genSalt(10));
+    await Organizer.updateOne({ _id: req.user._id }, { password: hashedPassword });
 
     res.status(200).json({
       success: true,

@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Event = require('../models/Event');
 const Request = require('../models/Request');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
 
 // ================= SEND ORGANIZER CREDENTIALS EMAIL =================
 const sendOrganizerCredentials = async ({ name, email, tempPassword }) => {
@@ -139,12 +140,13 @@ exports.toggleOrganizerStatus = async (req, res) => {
   try {
     const organizer = await Organizer.findById(req.params.id);
     if (!organizer) return res.status(404).json({ success: false, message: 'Organizer not found' });
-    organizer.isActive = !organizer.isActive;
-    await organizer.save();
+    const newStatus = !organizer.isActive;
+    // Use updateOne to avoid triggering pre-save password hash hook
+    await Organizer.updateOne({ _id: req.params.id }, { isActive: newStatus });
     res.status(200).json({
       success: true,
-      message: `Organizer ${organizer.isActive ? 'activated' : 'deactivated'} successfully`,
-      organizer: { id: organizer._id, name: organizer.name, isActive: organizer.isActive }
+      message: `Organizer ${newStatus ? 'activated' : 'deactivated'} successfully`,
+      organizer: { id: organizer._id, name: organizer.name, isActive: newStatus }
     });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to update organizer status' });
@@ -173,11 +175,11 @@ exports.approvePasswordReset = async (req, res) => {
     if (request.status !== 'Pending') return res.status(400).json({ success: false, message: 'Request already processed' });
 
     const newPassword = generatePassword();
-    const organizer = await Organizer.findById(request.organizer).select('+password');
-    if (!organizer) return res.status(404).json({ success: false, message: 'Organizer not found' });
+    const organizerExists = await Organizer.findById(request.organizer);
+    if (!organizerExists) return res.status(404).json({ success: false, message: 'Organizer not found' });
 
-    organizer.password = newPassword;
-    await organizer.save();
+    const hashedPassword = await bcrypt.hash(newPassword, await bcrypt.genSalt(10));
+    await Organizer.updateOne({ _id: request.organizer }, { password: hashedPassword });
 
     request.status = 'Approved';
     request.adminComment = adminComment || '';

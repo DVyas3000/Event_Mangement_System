@@ -410,8 +410,6 @@ const EventDetails = () => {
       setSuccess(`Successfully registered! Your ticket ID is: ${response.data.ticketId}`);
       setShowRegistrationModal(false);
       await fetchEventDetails();
-
-      setTimeout(() => { navigate('/participant/my-events'); }, 2000);
     } catch (err) {
       console.error('Registration error:', err);
       setError(err.response?.data?.message || 'Failed to register for event');
@@ -505,12 +503,6 @@ const EventDetails = () => {
               Ticket: {event.userRegistration.ticketId}
             </p>
           )}
-          <button
-            className="btn-view-ticket"
-            onClick={() => navigate('/participant/my-events')}
-          >
-            View My Events
-          </button>
           {!isHackathon && (
             <button
               className="btn-cancel"

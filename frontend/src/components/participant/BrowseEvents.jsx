@@ -1,12 +1,36 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './BrowseEvents.css';
 
+// ── Fuzzy match: returns true if query roughly matches target ──
+// Supports partial substring match AND fuzzy character-sequence match
+const fuzzyMatch = (target, query) => {
+  if (!query) return true;
+  const t = target.toLowerCase();
+  const q = query.toLowerCase().trim();
+  if (!q) return true;
+  // Partial substring match (e.g. "hack" matches "Hackathon")
+  if (t.includes(q)) return true;
+  // Fuzzy: all query chars appear in order inside target
+  // e.g. "hktn" matches "Hackathon", "cdng" matches "Coding"
+  if (q.length < 2) return false;
+  let ti = 0;
+  let matched = 0;
+  for (let qi = 0; qi < q.length; qi++) {
+    while (ti < t.length && t[ti] !== q[qi]) ti++;
+    if (ti >= t.length) return false;
+    matched++;
+    ti++;
+  }
+  // Require at least 60% of query chars to match to avoid false positives
+  return matched / q.length >= 0.6;
+};
+
 const BrowseEvents = () => {
   const navigate = useNavigate();
   
-  const [events, setEvents] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
   const [trendingEvents, setTrendingEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -21,11 +45,19 @@ const BrowseEvents = () => {
   
   const [activeFilter, setActiveFilter] = useState('all');
 
+  // Apply fuzzy search client-side — other filters go to backend
+  const events = useMemo(() => {
+    if (!searchQuery.trim()) return allEvents;
+    return allEvents.filter(event =>
+      fuzzyMatch(event.name || '', searchQuery) ||
+      fuzzyMatch(event.organizer?.name || '', searchQuery)
+    );
+  }, [allEvents, searchQuery]);
+
   const fetchEvents = useCallback(async () => {
     try {
       const params = new URLSearchParams();
-      
-      if (searchQuery) params.append('search', searchQuery);
+      // Search is handled client-side (fuzzy), other filters go to backend
       if (filterType) params.append('type', filterType);
       if (filterEligibility) params.append('eligibility', filterEligibility);
       if (filterStartDate) params.append('startDate', filterStartDate);
@@ -33,14 +65,14 @@ const BrowseEvents = () => {
       if (showFollowedOnly) params.append('followedOnly', 'true');
       
       const response = await api.get(`/participant/events/browse?${params.toString()}`);
-      setEvents(response.data.events);
+      setAllEvents(response.data.events);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching events:', error);
       setError('Failed to load events');
       setLoading(false);
     }
-  }, [searchQuery, filterType, filterEligibility, filterStartDate, filterEndDate, showFollowedOnly]);
+  }, [filterType, filterEligibility, filterStartDate, filterEndDate, showFollowedOnly]);
 
   const fetchTrendingEvents = useCallback(async () => {
     try {
@@ -144,6 +176,7 @@ const BrowseEvents = () => {
           <div className="search-box">
             <input
               type="text"
+              placeholder="Search events or organizers..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -152,7 +185,7 @@ const BrowseEvents = () => {
                 className="clear-search"
                 onClick={() => setSearchQuery('')}
               >
-                
+                ×
               </button>
             )}
           </div>
@@ -231,6 +264,15 @@ const BrowseEvents = () => {
 
           </div>
         </div>
+
+        {/* Events count indicator */}
+        {searchQuery && (
+          <div style={{ marginBottom: 12, fontSize: 13, color: '#6b7280' }}>
+            {events.length === 0
+              ? `No results for "${searchQuery}"`
+              : `${events.length} result${events.length !== 1 ? 's' : ''} for "${searchQuery}"`}
+          </div>
+        )}
 
         {/* Events List */}
         <div className="events-grid">

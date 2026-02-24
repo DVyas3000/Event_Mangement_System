@@ -216,14 +216,14 @@ const TeamRegistration = ({ event, onClose }) => {
               {myTeam.status === 'Complete' && (
                 <div>
                   <div className="tr-complete-msg">
-                    ✅ Team registration complete! Check your email for your ticket.
+                     Team registration complete! Check your email for your ticket.
                   </div>
                   <button
                     className="tr-btn-primary"
                     style={{ width: '100%', marginTop: '12px' }}
                     onClick={() => setShowChat(s => !s)}
                   >
-                    💬 {showChat ? 'Hide Team Chat' : 'Open Team Chat'}
+                     {showChat ? 'Hide Team Chat' : 'Open Team Chat'}
                   </button>
                   {showChat && (
                     <div style={{ marginTop: '16px' }}>
