@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-// FIX #12: Use environment variable for production, fallback to localhost for development
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// FIX #12: Use environment variable for production, fallback to localhost for development.
+// Ensure base URL always includes /api exactly once.
+const RAW_API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = RAW_API_URL.endsWith('/api')
+  ? RAW_API_URL
+  : `${RAW_API_URL.replace(/\/+$/, '')}/api`;
 
 // Create axios instance
 const api = axios.create({
