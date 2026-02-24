@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { participantAPI, teamAPI } from '../../services/api';
@@ -23,11 +23,7 @@ const TeamRegistrationModal = ({ event, onClose, onSuccess }) => {
   const [inviteCode, setInviteCode] = useState('');
   const [preview, setPreview]       = useState(null);
 
-  useEffect(() => { 
-    fetchMyTeam(); 
-  }, []);
-
-  const fetchMyTeam = async () => {
+  const fetchMyTeam = useCallback(async () => {
     setLoadingTeam(true);
     try {
       const res = await teamAPI.getMyTeam(event._id);
@@ -38,7 +34,11 @@ const TeamRegistrationModal = ({ event, onClose, onSuccess }) => {
       setMyTeam(null);
     }
     setLoadingTeam(false);
-  };
+  }, [event._id]);
+
+  useEffect(() => { 
+    fetchMyTeam(); 
+  }, [fetchMyTeam]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -348,7 +348,7 @@ const TeamRegistrationModal = ({ event, onClose, onSuccess }) => {
 const EventDetails = () => {
   const { eventId } = useParams();
   const navigate    = useNavigate();
-  const { user }    = useAuth();
+  const { user: _user }    = useAuth();
 
   const [event, setEvent]                         = useState(null);
   const [loading, setLoading]                     = useState(true);
@@ -360,9 +360,7 @@ const EventDetails = () => {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showTeamModal, setShowTeamModal]         = useState(false);
 
-  useEffect(() => { fetchEventDetails(); }, [eventId]);
-
-  const fetchEventDetails = async () => {
+  const fetchEventDetails = useCallback(async () => {
     try {
       const response = await participantAPI.getEventById(eventId);
       setEvent(response.data.event);
@@ -372,7 +370,9 @@ const EventDetails = () => {
       setError('Failed to load event details');
       setLoading(false);
     }
-  };
+  }, [eventId]);
+
+  useEffect(() => { fetchEventDetails(); }, [fetchEventDetails]);
 
   // ── Normal / Merchandise registration button handler ──────
   const handleRegister = () => {

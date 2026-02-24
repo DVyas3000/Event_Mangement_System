@@ -306,7 +306,6 @@ tbody tr:last-child td { border-bottom: none; }
 
 .resets-list { display: flex; flex-direction: column; gap: 16px; }
 .reset-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 20px; transition: box-shadow 0.2s; }
-.reset-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
 .reset-card.reset-pending { border-left: 4px solid #ffc107; }
 .reset-card.reset-approved { border-left: 4px solid #28a745; }
 .reset-card.reset-rejected { border-left: 4px solid #dc3545; }
@@ -327,9 +326,7 @@ tbody tr:last-child td { border-bottom: none; }
 .reset-comment-input { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; resize: vertical; font-family: inherit; font-size: 13px; margin-bottom: 10px; box-sizing: border-box; }
 .reset-actions { display: flex; gap: 10px; }
 .btn-approve { background: #28a745; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: background 0.2s; }
-.btn-approve:hover { background: #218838; }
 .btn-reject  { background: #dc3545; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: background 0.2s; }
-.btn-reject:hover { background: #c82333; }
 
 .admin-comment-box { background: #f0f4ff; border-radius: 6px; padding: 8px 12px; margin-top: 10px; font-size: 13px; }
 .approved-note { color: #28a745; font-size: 13px; margin-top: 8px; }

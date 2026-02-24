@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './TicketPage.css';
@@ -12,11 +12,7 @@ const TicketPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    fetchTicket();
-  }, [ticketId]);
-
-  const fetchTicket = async () => {
+  const fetchTicket = useCallback(async () => {
     try {
       const response = await api.get(`/participant/ticket/${ticketId}`);
       setTicket(response.data.ticket);
@@ -25,7 +21,11 @@ const TicketPage = () => {
       setError(err.response?.data?.message || 'Failed to load ticket');
       setLoading(false);
     }
-  };
+  }, [ticketId]);
+
+  useEffect(() => {
+    fetchTicket();
+  }, [fetchTicket]);
 
   const handlePrint = () => {
     window.print();

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import api, { organizerAPI, teamAPI } from '../../services/api';
+import { organizerAPI, teamAPI } from '../../services/api';
 import './OrganizerDashboard.css';
 
 const initialEventState = {
@@ -66,12 +66,7 @@ const OrganizerDashboard = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  useEffect(() => {
-    fetchDashboardData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       const [eventsRes, statsRes] = await Promise.all([
         organizerAPI.getEvents(),
@@ -90,7 +85,11 @@ const OrganizerDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [stats]);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, [fetchDashboardData]);
 
   const handlePublishEvent = async (eventId) => {
     setError('');
@@ -484,21 +483,21 @@ const OrganizerDashboard = () => {
 
   const isDateOnly = (v) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v);
 
-  const toStartMs = (v) => {
+  const toStartMs = useCallback((v) => {
     if (!v) return NaN;
     if (isDateOnly(v)) return new Date(`${v}T00:00:00`).getTime(); // local start of day
     const t = new Date(v).getTime();
     return Number.isNaN(t) ? NaN : t;
-  };
+  }, [isDateOnly]);
 
-  const toEndMs = (v) => {
+  const toEndMs = useCallback((v) => {
     if (!v) return NaN;
     if (isDateOnly(v)) return new Date(`${v}T23:59:59.999`).getTime(); // local end of day
     const t = new Date(v).getTime();
     return Number.isNaN(t) ? NaN : t;
-  };
+  }, [isDateOnly]);
 
-const getPrettyStatus = (event) => {
+const getPrettyStatus = useCallback((event) => {
   const backendStatus = event?.status;
 
   if (backendStatus === 'Draft') return 'Draft';
@@ -517,7 +516,7 @@ const getPrettyStatus = (event) => {
   }
 
   return backendStatus; 
-};
+}, [toStartMs, toEndMs]);
 
   const statusClass = (prettyStatus) => {
     const map = {
@@ -535,7 +534,7 @@ const getPrettyStatus = (event) => {
       const pretty = getPrettyStatus(ev);
       return { ...ev, __prettyStatus: pretty };
     });
-  }, [events]);
+  }, [events, getPrettyStatus]);
 
   if (loading) {
     return (

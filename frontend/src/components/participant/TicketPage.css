@@ -47,7 +47,6 @@
   font-weight: 600;
   transition: background 0.12s;
 }
-.btn-print:hover { background: var(--primary); }
 
 .ticket-wrapper { max-width: 860px; margin: 32px auto; padding: 0 20px; }
 

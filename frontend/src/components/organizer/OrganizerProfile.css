@@ -26,7 +26,6 @@
   font-weight: 600;
   transition: background 0.12s;
 }
-.profile-navbar button:hover { background: #000000; }
 
 .profile-content { display: flex; padding: 28px 24px; gap: 20px; max-width: 1280px; margin: 0 auto; }
 
@@ -55,7 +54,6 @@
   border-radius: 2px;
   transition: background 0.1s, border-color 0.1s;
 }
-.tab:hover { border-color: #111111; }
 .tab.active { background: #111111; color: #ffffff; border-color: #111111; font-weight: 600; }
 
 /* Forms */
@@ -99,7 +97,6 @@
   cursor: pointer;
   transition: background 0.12s;
 }
-.primary-btn:hover { background: #000000; }
 .primary-btn:disabled { background: #999999; cursor: not-allowed; }
 
 /* Alerts */

@@ -43,7 +43,6 @@
   padding: 5px 12px; border-radius: 20px; cursor: pointer;
   font-size: 13px; transition: background 0.2s;
 }
-.tc-members-btn:hover { background: rgba(255,255,255,0.25); }
 .tc-unread-badge {
   background: #ef4444; color: #fff; font-size: 11px; font-weight: 700;
   padding: 2px 8px; border-radius: 10px;

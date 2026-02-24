@@ -112,7 +112,6 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.organizer-name:hover { color: var(--heading); }
 .organizer-category { margin: 0; color: var(--text); font-size: 12px; }
 
 .event-description-section { margin-bottom: 20px; }
@@ -227,7 +226,6 @@
   margin-bottom: 10px;
   transition: background 0.12s;
 }
-.btn-register:hover { background: var(--primary); }
 .registration-note {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -252,7 +250,6 @@
   font-weight: 600;
   transition: background 0.12s;
 }
-.btn-view-ticket:hover { background: var(--primary); }
 .contact-card p { margin: 0 0 6px; color: var(--text); font-size: 13px; }
 .organizer-desc { color: var(--text); font-size: 12px; line-height: 1.6; }
 
@@ -292,7 +289,6 @@
   line-height: 1;
   padding: 0;
 }
-.modal-close:hover { color: var(--heading); }
 .modal-body { padding: 18px 20px; }
 .registration-summary-modal {
   background: var(--bg);
@@ -353,7 +349,6 @@
   font-size: 13px;
   font-weight: 500;
 }
-.btn-cancel:hover { background: var(--bg); }
 .btn-confirm-register {
   padding: 8px 18px;
   background: var(--primary);
@@ -365,7 +360,6 @@
   font-weight: 600;
   transition: background 0.12s;
 }
-.btn-confirm-register:hover:not(:disabled) { background: var(--primary); }
 .btn-confirm-register:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* Alert */

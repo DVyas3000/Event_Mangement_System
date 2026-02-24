@@ -61,7 +61,6 @@
   transition: color 0.1s, background 0.1s;
   white-space: nowrap;
 }
-.nav-btn:hover  { color: var(--heading); background: #f0f0f0; }
 .nav-btn.active { color: var(--heading); font-weight: 700; }
 
 .btn-logout {
@@ -106,7 +105,6 @@
   line-height: 1;
   padding: 0;
 }
-.alert-close:hover { opacity: 1; }
 
 /*  Welcome header  */
 .welcome-section {
@@ -254,7 +252,6 @@
   align-items: center;
   gap: 6px;
 }
-.tab:hover { color: var(--heading); }
 .tab.active {
   color: var(--heading);
   border-bottom-color: var(--primary);
@@ -289,8 +286,6 @@
 }
 /* Left accent stripe only on upcoming cards */
 .event-card.upcoming { border-left: 3px solid var(--primary); }
-.event-card:hover { border-color: var(--hover-border); }
-.event-card.upcoming:hover { border-color: var(--hover-border); border-left-color: var(--hover-border); }
 
 .event-card-header {
   display: flex;
@@ -376,7 +371,6 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.clickable-ticket:hover { color: var(--heading); }
 
 /*  Card actions  */
 .event-actions {
@@ -398,7 +392,6 @@
   cursor: pointer;
   transition: background 0.1s, border-color 0.1s;
 }
-.btn-view-ticket:hover { border-color: var(--hover-border); }
 .btn-view-ticket:disabled {
   background: #d4d4d4;
   border-color: #d4d4d4;
@@ -417,7 +410,6 @@
   cursor: pointer;
   transition: border-color 0.1s, background 0.1s;
 }
-.btn-event-details:hover { border-color: var(--hover-border); background: #eeeeee; }
 
 /*  Empty states  */
 .empty-state {
@@ -462,7 +454,6 @@
   cursor: pointer;
   transition: background 0.1s, border-color 0.1s;
 }
-.btn-primary:hover { border-color: var(--hover-border); }
 
 /*  Loading state  */
 .loading-state {

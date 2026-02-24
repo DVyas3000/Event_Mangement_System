@@ -59,7 +59,6 @@ select.form-control { cursor: pointer; }
   transition: background 0.12s;
   margin-top: 8px;
 }
-.btn-primary:hover { background: #000000; }
 .btn-primary:disabled { background: #999999; cursor: not-allowed; }
 .form-footer { margin-top: 18px; text-align: center; }
 @media (max-width: 480px) { .login-box { padding: 28px 20px; } }

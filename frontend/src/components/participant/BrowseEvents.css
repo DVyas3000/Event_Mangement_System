@@ -82,7 +82,6 @@
   box-sizing: border-box;
   transition: border-color 0.1s;
 }
-.search-box input:focus { outline: none; border-color: var(--hover-border); }
 .clear-search {
   position: absolute;
   right: 9px;

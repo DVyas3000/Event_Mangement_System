@@ -84,7 +84,6 @@
   text-align: center;
   gap: 10px;
 }
-.club-card:hover { border-color: var(--hover-border); }
 .club-card.selected { border-color: var(--hover-border); border-width: 2px; background: var(--bg); }
 
 .club-icon {
@@ -148,7 +147,6 @@
   border-radius: 2px;
   transition: background 0.12s;
 }
-.continue-btn:hover:not(:disabled) { background: var(--primary); }
 .continue-btn:disabled { background: #999999; cursor: not-allowed; }
 
 .skip-btn {
@@ -163,7 +161,6 @@
   border-radius: 2px;
   transition: border-color 0.1s;
 }
-.skip-btn:hover { border-color: var(--hover-border); color: var(--heading); }
 
 @media (max-width: 768px) {
   .clubs-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }

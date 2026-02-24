@@ -71,9 +71,6 @@
   transition: color 0.2s;
 }
 
-.tr-close:hover {
-  color: #111;
-}
 
 /* Modal Body */
 .tr-modal-body {
@@ -135,9 +132,6 @@
   transition: background 0.2s, border-color 0.2s;
 }
 
-.tr-btn-primary:hover {
-  background: #333;
-}
 
 .tr-btn-primary:disabled {
   background: #ccc;
@@ -160,9 +154,6 @@
   transition: border-color 0.2s;
 }
 
-.tr-btn-secondary:hover {
-  border-color: var(--hover-border);
-}
 
 .tr-btn-accept {
   padding: 10px 20px;
@@ -176,9 +167,6 @@
   transition: background 0.2s;
 }
 
-.tr-btn-accept:hover {
-  background: #145a2a;
-}
 
 .tr-btn-decline {
   padding: 10px 20px;
@@ -192,9 +180,6 @@
   transition: background 0.2s;
 }
 
-.tr-btn-decline:hover {
-  background: #900000;
-}
 
 /* Form */
 .tr-form {
@@ -358,9 +343,6 @@
   width: 100%;
 }
 
-.tr-btn-copy:hover {
-  border-color: var(--hover-border);
-}
 
 .tr-invite-hint {
   font-size: 11px;

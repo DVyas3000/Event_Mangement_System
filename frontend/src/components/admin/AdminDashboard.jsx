@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { adminAPI } from '../../services/api';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
   
   const [activeTab, setActiveTab] = useState('overview');
@@ -44,12 +44,7 @@ const AdminDashboard = () => {
   const [resetFilter, setResetFilter]       = useState('All');
   const [eventFilter, setEventFilter]       = useState('ALL');
 
-  useEffect(() => {
-    fetchDashboardData();
-    fetchSecurityData();
-  }, []);
-
-  const fetchSecurityData = async () => {
+  const fetchSecurityData = useCallback(async () => {
     try {
       const [evRes, blRes] = await Promise.all([
         adminAPI.getSecurityEvents(),
@@ -60,7 +55,7 @@ const AdminDashboard = () => {
     } catch (err) {
       console.error('Security fetch error:', err);
     }
-  };
+  }, []);
 
   const handleManualBlock = async () => {
     if (!blockIPInput.trim()) return;
@@ -82,7 +77,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       // Fetch organizers
       const orgResponse = await adminAPI.getOrganizers();
@@ -98,7 +93,12 @@ const AdminDashboard = () => {
       console.error('Error fetching data:', err);
       setError('Failed to load dashboard data');
     }
-  };
+  }, [stats]);
+
+  useEffect(() => {
+    fetchDashboardData();
+    fetchSecurityData();
+  }, [fetchDashboardData, fetchSecurityData]);
 
   const handleApproveReset = async (requestId) => {
     const comment = resetComment[requestId] || '';

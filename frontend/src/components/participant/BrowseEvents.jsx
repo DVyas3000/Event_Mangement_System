@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './BrowseEvents.css';
@@ -21,16 +21,7 @@ const BrowseEvents = () => {
   
   const [activeFilter, setActiveFilter] = useState('all');
 
-  useEffect(() => {
-    fetchEvents();
-    fetchTrendingEvents();
-  }, []);
-
-  useEffect(() => {
-    fetchEvents();
-  }, [searchQuery, filterType, filterEligibility, filterStartDate, filterEndDate, showFollowedOnly]);
-
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       
@@ -49,16 +40,21 @@ const BrowseEvents = () => {
       setError('Failed to load events');
       setLoading(false);
     }
-  };
+  }, [searchQuery, filterType, filterEligibility, filterStartDate, filterEndDate, showFollowedOnly]);
 
-  const fetchTrendingEvents = async () => {
+  const fetchTrendingEvents = useCallback(async () => {
     try {
       const response = await api.get('/participant/events/trending');
       setTrendingEvents(response.data.events);
     } catch (error) {
       console.error('Error fetching trending events:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchEvents();
+    fetchTrendingEvents();
+  }, [fetchEvents, fetchTrendingEvents]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -77,13 +73,6 @@ const BrowseEvents = () => {
     });
   };
 
-  const getEventTypeColor = (type) => {
-    return type === 'Merchandise' ? '#fef3c7' : '#dbeafe';
-  };
-
-  const getEventTypeTextColor = (type) => {
-    return type === 'Merchandise' ? '#92400e' : '#1e40af';
-  };
 
   if (loading) {
     return (
