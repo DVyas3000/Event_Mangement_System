@@ -1,0 +1,499 @@
+:root {
+  --bg: #fdf6ff;
+  --card: #ffffff;
+  --primary: #c084fc;
+  --secondary: #f9a8d4;
+  --accent: #86efac;
+  --text: #4a4a6a;
+  --border: #e9d5ff;
+  --hover-border: #c084fc;
+  --heading: #7c3aed;
+}
+
+/* TeamRegistration.css */
+
+/* Modal Overlay */
+.tr-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+/* Modal Container */
+.tr-modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Header */
+.tr-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  background: #fafafa;
+}
+
+.tr-modal-header h2 {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+.tr-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #888;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.tr-close:hover {
+  color: #111;
+}
+
+/* Modal Body */
+.tr-modal-body {
+  padding: 24px;
+}
+
+/* Alerts */
+.tr-alert {
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tr-alert-error {
+  background: #fee;
+  border: 1px solid #fcc;
+  color: #c00;
+}
+
+.tr-alert-success {
+  background: #efe;
+  border: 1px solid #cfc;
+  color: #090;
+}
+
+/* Choice Screen */
+.tr-choice {
+  text-align: center;
+}
+
+.tr-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+.tr-choice-btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.tr-btn-primary {
+  flex: 1;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: #fff;
+  border: 1px solid var(--primary);
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.tr-btn-primary:hover {
+  background: #333;
+}
+
+.tr-btn-primary:disabled {
+  background: #ccc;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.tr-btn-secondary {
+  flex: 1;
+  padding: 12px 24px;
+  background: var(--card);
+  color: #111;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.tr-btn-secondary:hover {
+  border-color: var(--hover-border);
+}
+
+.tr-btn-accept {
+  padding: 10px 20px;
+  background: #197c3a;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tr-btn-accept:hover {
+  background: #145a2a;
+}
+
+.tr-btn-decline {
+  padding: 10px 20px;
+  background: #b00000;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tr-btn-decline:hover {
+  background: #900000;
+}
+
+/* Form */
+.tr-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.tr-form-title {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 20px;
+}
+
+.tr-field {
+  margin-bottom: 18px;
+}
+
+.tr-field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.tr-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-size: 14px;
+  color: #111;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.tr-field input:focus {
+  outline: none;
+  border-color: var(--hover-border);
+}
+
+.tr-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Team Card */
+.tr-team-card {
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 3px;
+}
+
+.tr-team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.tr-team-header h3 {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+/* Status Badges */
+.tr-status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tr-status-forming {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.tr-status-complete {
+  background: #d4edda;
+  color: #155724;
+}
+
+.tr-status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.tr-status-leader {
+  background: var(--primary);
+  color: #fff;
+}
+
+.tr-status-accepted {
+  background: #d4edda;
+  color: #155724;
+}
+
+.tr-status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.tr-status-declined {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Invite Box */
+.tr-invite-box {
+  background: #fafafa;
+  border: 1px solid var(--border);
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+}
+
+.tr-invite-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  margin: 0 0 8px;
+}
+
+.tr-invite-code {
+  font-family: 'Courier New', monospace;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+  text-align: center;
+  padding: 8px;
+  background: var(--card);
+  border: 2px dashed #d4d4d4;
+}
+
+.tr-btn-copy {
+  padding: 8px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.tr-btn-copy:hover {
+  border-color: var(--hover-border);
+}
+
+.tr-invite-hint {
+  font-size: 11px;
+  color: #666;
+  margin: 12px 0 0;
+  line-height: 1.5;
+}
+
+/* Team Info */
+.tr-team-info {
+  margin-bottom: 20px;
+}
+
+.tr-info-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.tr-label {
+  color: #888;
+  min-width: 100px;
+  font-weight: 600;
+}
+
+/* Members List */
+.tr-members {
+  margin-top: 20px;
+}
+
+.tr-members h4 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  margin: 0 0 12px;
+}
+
+.tr-member-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  margin-bottom: 6px;
+  border-radius: 3px;
+}
+
+.tr-member-name {
+  font-size: 14px;
+  color: #111;
+  font-weight: 500;
+}
+
+.tr-member-status {
+  font-size: 11px;
+}
+
+/* Complete Message */
+.tr-complete-msg {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+  padding: 14px 16px;
+  margin-top: 20px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Pending Invite */
+.tr-invite-pending {
+  text-align: center;
+}
+
+.tr-invite-pending h3 {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: #111;
+  margin: 0 0 12px;
+}
+
+.tr-invite-pending > p {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 20px;
+}
+
+.tr-invite-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  justify-content: center;
+}
+
+/* Preview Box */
+.tr-preview-box {
+  background: #fafafa;
+  border: 1px solid var(--border);
+  padding: 16px;
+  margin-top: 16px;
+  border-radius: 3px;
+}
+
+.tr-preview-box h4 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  margin: 0 0 12px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .tr-modal {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .tr-choice-btns {
+    flex-direction: column;
+  }
+
+  .tr-form-actions {
+    flex-direction: column;
+  }
+
+  .tr-invite-actions {
+    flex-direction: column;
+  }
+}

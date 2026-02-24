@@ -1,0 +1,21 @@
+.oo-modal-body-420 {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.oo-modal-body-520 {
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.oo-mb-12 {
+  margin-bottom: 12px;
+}
+
+.oo-analysis-card {
+  padding: 12px;
+}
+
+.oo-analysis-title {
+  margin-top: 0;
+}
