@@ -37,12 +37,6 @@ const TicketPage = () => {
     });
   };
 
-  const formatTime = (dateString) => {
-    return new Date(dateString).toLocaleTimeString('en-US', {
-      hour: '2-digit', minute: '2-digit'
-    });
-  };
-
   const formatDateTime = (dateString) => {
     return new Date(dateString).toLocaleString('en-GB', {
       day: '2-digit', month: '2-digit', year: '2-digit',
@@ -51,8 +45,8 @@ const TicketPage = () => {
   };
 
   const getStatusColor = (status) => {
-    const map = { Approved: '#10b981', Pending: '#f59e0b', Rejected: '#ef4444' };
-    return map[status] || '#6b7280';
+    const map = { Approved: '#111111', Pending: '#111111', Rejected: '#111111' };
+    return map[status] || '#333333';
   };
 
   if (loading) {
@@ -140,12 +134,6 @@ const TicketPage = () => {
                   <div>
                     <span className="d-label">Date</span>
                     <span className="d-value">{formatDate(event.startDate)}</span>
-                  </div>
-                </div>
-                <div className="detail-row">
-                  <div>
-                    <span className="d-label">Time</span>
-                    <span className="d-value">{formatTime(event.startDate)}</span>
                   </div>
                 </div>
                 {event.endDate && event.endDate !== event.startDate && (

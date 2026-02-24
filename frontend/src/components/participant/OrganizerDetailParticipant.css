@@ -1,13 +1,13 @@
 :root {
-  --bg: #fdf6ff;
+  --bg: #f5f5f5;
   --card: #ffffff;
-  --primary: #c084fc;
-  --secondary: #f9a8d4;
-  --accent: #86efac;
-  --text: #4a4a6a;
-  --border: #e9d5ff;
-  --hover-border: #c084fc;
-  --heading: #7c3aed;
+  --primary: #111111;
+  --secondary: #1f1f1f;
+  --accent: #e5e5e5;
+  --text: #333333;
+  --border: #d4d4d4;
+  --hover-border: #111111;
+  --heading: #111111;
 }
 
 .org-detail-page { padding: 20px; }
@@ -29,6 +29,6 @@
 .org-event-title { font-weight: 800; margin-bottom: 8px; }
 .org-event-row { color: var(--text); font-size: 13px; margin-bottom: 6px; }
 .org-event-btn { margin-top: 8px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background:#f9fafb; cursor:pointer; font-weight:700; }
-.org-error { background:#fee2e2; color:#991b1b; padding: 10px 12px; border-radius: 12px; margin-bottom: 12px; }
+.org-error { background:#f0f0f0; color:#111111; padding: 10px 12px; border-radius: 12px; margin-bottom: 12px; }
 .org-empty { padding: 14px; border: 1px dashed #d1d5db; border-radius: 14px; color: var(--text); background:#fafafa; }
 .org-loading { color: var(--text); }

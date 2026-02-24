@@ -438,9 +438,9 @@ const AdminDashboard = () => {
   };
 
   const EVENT_COLORS = {
-    FAILED_ATTEMPT: '#b00000', AUTO_BLOCK: '#7c1010', MANUAL_BLOCK: '#4a0000',
-    BLOCKED_REQUEST: '#cc4400', RATE_LIMITED: '#cc7700', UNBLOCK: '#1a6b30',
-    SUCCESS: '#1a6b30'
+    FAILED_ATTEMPT: '#111111', AUTO_BLOCK: '#111111', MANUAL_BLOCK: '#111111',
+    BLOCKED_REQUEST: '#111111', RATE_LIMITED: '#111111', UNBLOCK: '#111111',
+    SUCCESS: '#111111'
   };
 
   const renderSecurity = () => {

@@ -62,32 +62,6 @@ const FollowClubs = () => {
     navigate('/participant/dashboard');
   };
 
-  // Get category icon based on category
-  const getCategoryIcon = (category) => {
-    const icons = {
-      Technical: '',
-      Cultural: '',
-      Sports: '',
-      Social: '',
-      Academic: '',
-      Other: ''
-    };
-    return icons[category];
-  };
-
-  // Get category color
-  const getCategoryColor = (category) => {
-    const colors = {
-      Technical: '#3b82f6',
-      Cultural: '#ec4899',
-      Sports: '#10b981',
-      Social: '#f59e0b',
-      Academic: '#8b5cf6',
-      Other: '#6b7280'
-    };
-    return colors[category] || '#6b7280';
-  };
-
   if (loading) {
     return (
       <div className="follow-clubs-container">
@@ -129,27 +103,18 @@ const FollowClubs = () => {
                 onClick={() => toggleClub(club._id)}
                 style={{
                 borderColor: selectedClubs.includes(club._id)
-                    ? getCategoryColor(club.category)
+                    ? '#111111'
                     : 'transparent'
                 }}
             >
-                <div
-                className="club-icon"
-                style={{
-                    background: `linear-gradient(135deg, ${getCategoryColor(club.category)}22, ${getCategoryColor(club.category)}44)`
-                }}
-                >
-                <span style={{ fontSize: '2.5rem' }}>{getCategoryIcon(club.category)}</span>
-                </div>
-
                 <div className="club-info">
                 <h3>{club.name}</h3>
 
                 <span
                     className="club-category"
                     style={{
-                    background: `${getCategoryColor(club.category)}22`,
-                    color: getCategoryColor(club.category)
+                    background: '#f0f0f0',
+                    color: '#333333'
                     }}
                 >
                     {club.category}

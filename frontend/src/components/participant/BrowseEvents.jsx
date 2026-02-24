@@ -131,7 +131,7 @@ const BrowseEvents = () => {
       {/* Navbar */}
       <nav className="browse-navbar">
         <button onClick={() => navigate('/participant/dashboard')} className="btn-back">
-           Back to Dashboard
+           Back
         </button>
         <h1>Browse Events</h1>
       </nav>
@@ -267,7 +267,7 @@ const BrowseEvents = () => {
 
         {/* Events count indicator */}
         {searchQuery && (
-          <div style={{ marginBottom: 12, fontSize: 13, color: '#6b7280' }}>
+          <div style={{ marginBottom: 12, fontSize: 13, color: '#666666' }}>
             {events.length === 0
               ? `No results for "${searchQuery}"`
               : `${events.length} result${events.length !== 1 ? 's' : ''} for "${searchQuery}"`}

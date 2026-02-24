@@ -1143,14 +1143,14 @@ const getPrettyStatus = useCallback((event) => {
                       ].map(s => (
                         <div key={s.label} style={{ flex: 1, background: '#f8f9fa', borderRadius: 8, padding: '10px 14px', textAlign: 'center' }}>
                           <div style={{ fontSize: 22, fontWeight: 700 }}>{s.value}</div>
-                          <div style={{ fontSize: 12, color: '#6b7280' }}>{s.label}</div>
+                          <div style={{ fontSize: 12, color: '#666666' }}>{s.label}</div>
                         </div>
                       ))}
                     </div>
 
                     {/* Scan status message */}
                     {scanMessage && (
-                      <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 8, padding: '8px 12px', marginBottom: 12, fontSize: 13, color: '#166534' }}>
+                      <div style={{ background: '#f0f0f0', border: '1px solid #d4d4d4', borderRadius: 8, padding: '8px 12px', marginBottom: 12, fontSize: 13, color: '#111111' }}>
                         {scanMessage}
                       </div>
                     )}
@@ -1182,7 +1182,7 @@ const getPrettyStatus = useCallback((event) => {
 
                         {/* Manual entry */}
                         <div style={{ background: '#f8f9fa', borderRadius: 8, padding: '12px 14px', marginBottom: 14 }}>
-                          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8, color: '#374151' }}>Manual Entry</div>
+                          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8, color: '#333333' }}>Manual Entry</div>
                           <div style={{ display: 'flex', gap: 8 }}>
                             <input
                               type="text"
@@ -1205,16 +1205,16 @@ const getPrettyStatus = useCallback((event) => {
                     </div>
 
                     {total === 0 ? (
-                      <p style={{ color: '#9ca3af', fontSize: 13 }}>No registrations yet.</p>
+                      <p style={{ color: '#666666', fontSize: 13 }}>No registrations yet.</p>
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                         {analyzeEvent.participants.map((p) => (
-                          <div key={p.ticketId} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', background: p.attended ? '#f0fdf4' : '#fff', border: `1px solid ${p.attended ? '#bbf7d0' : '#e5e7eb'}`, borderRadius: 8 }}>
+                          <div key={p.ticketId} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', background: p.attended ? '#f0f0f0' : '#fff', border: `1px solid ${p.attended ? '#d4d4d4' : '#e5e7eb'}`, borderRadius: 8 }}>
                             <div style={{ flex: 1 }}>
                               <div style={{ fontWeight: 600, fontSize: 13 }}>{p.user?.firstName} {p.user?.lastName}</div>
-                              <div style={{ fontSize: 11, color: '#6b7280' }}>{p.ticketId} · {p.user?.email}</div>
+                              <div style={{ fontSize: 11, color: '#666666' }}>{p.ticketId} · {p.user?.email}</div>
                             </div>
-                            <span style={{ fontSize: 11, fontWeight: 600, color: p.attended ? '#166534' : '#9ca3af', background: p.attended ? '#dcfce7' : '#f3f4f6', padding: '2px 8px', borderRadius: 12 }}>
+                            <span style={{ fontSize: 11, fontWeight: 600, color: p.attended ? '#111111' : '#666666', background: p.attended ? '#f0f0f0' : '#f3f4f6', padding: '2px 8px', borderRadius: 12 }}>
                               {p.attended ? '✓ Attended' : 'Pending'}
                             </span>
                           </div>
@@ -1266,20 +1266,20 @@ const getPrettyStatus = useCallback((event) => {
               {/* Request History */}
               {resetRequests.length > 0 && (
                 <div style={{marginTop:'24px',borderTop:'1px solid #eee',paddingTop:'16px'}}>
-                  <h4 style={{marginBottom:'12px',fontSize:'14px',color:'#374151'}}>My Request History</h4>
+                  <h4 style={{marginBottom:'12px',fontSize:'14px',color:'#333333'}}>My Request History</h4>
                   {resetRequests.map(r => (
                     <div key={r._id} style={{background:'#f9f9f9',border:'1px solid #eee',borderRadius:'8px',padding:'12px',marginBottom:'10px'}}>
                       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'6px'}}>
-                        <span style={{fontSize:'12px',color:'#9ca3af'}}>{formatDateTime(r.createdAt)}</span>
+                        <span style={{fontSize:'12px',color:'#666666'}}>{formatDateTime(r.createdAt)}</span>
                         <span style={{
                           padding:'2px 10px',borderRadius:'12px',fontSize:'11px',fontWeight:700,
-                          background: r.status==='Pending'?'#fff3cd':r.status==='Approved'?'#d4edda':'#f8d7da',
-                          color: r.status==='Pending'?'#856404':r.status==='Approved'?'#155724':'#721c24'
+                          background: r.status==='Pending'?'#f0f0f0':r.status==='Approved'?'#f0f0f0':'#f0f0f0',
+                          color: r.status==='Pending'?'#111111':r.status==='Approved'?'#111111':'#111111'
                         }}>{r.status}</span>
                       </div>
-                      <p style={{fontSize:'13px',margin:'4px 0',color:'#374151'}}><strong>Reason:</strong> {r.reason}</p>
-                      {r.adminComment && <p style={{fontSize:'12px',margin:'4px 0',color:'#6b7280'}}><strong>Admin Comment:</strong> {r.adminComment}</p>}
-                      {r.status === 'Approved' && <p style={{fontSize:'12px',color:'#065f46',margin:'6px 0 0',fontWeight:600}}> Your password has been reset. Contact admin to receive it.</p>}
+                      <p style={{fontSize:'13px',margin:'4px 0',color:'#333333'}}><strong>Reason:</strong> {r.reason}</p>
+                      {r.adminComment && <p style={{fontSize:'12px',margin:'4px 0',color:'#666666'}}><strong>Admin Comment:</strong> {r.adminComment}</p>}
+                      {r.status === 'Approved' && <p style={{fontSize:'12px',color:'#111111',margin:'6px 0 0',fontWeight:600}}> Your password has been reset. Contact admin to receive it.</p>}
                     </div>
                   ))}
                 </div>

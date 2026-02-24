@@ -1,13 +1,13 @@
 :root {
-  --bg: #fdf6ff;
+  --bg: #f5f5f5;
   --card: #ffffff;
-  --primary: #c084fc;
-  --secondary: #f9a8d4;
-  --accent: #86efac;
-  --text: #4a4a6a;
-  --border: #e9d5ff;
-  --hover-border: #c084fc;
-  --heading: #7c3aed;
+  --primary: #111111;
+  --secondary: #1f1f1f;
+  --accent: #e5e5e5;
+  --text: #333333;
+  --border: #d4d4d4;
+  --hover-border: #111111;
+  --heading: #111111;
 }
 
 /* ==========================================================
@@ -67,8 +67,8 @@
 .clubs-page-header p { margin: 0; font-size: 13px; color: var(--text); }
 
 .alert { padding: 10px 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
-.alert-error { background: #fafafa; color: #b00000; border: 1px solid #e8c0c0; border-left: 3px solid #b00000; }
-.alert-success { background: #fafafa; color: #1a6b30; border: 1px solid #b0d8b0; border-left: 3px solid #1a6b30; }
+.alert-error { background: #fafafa; color: #111111; border: 1px solid #d4d4d4; border-left: 3px solid #111111; }
+.alert-success { background: #fafafa; color: #111111; border: 1px solid #d4d4d4; border-left: 3px solid #111111; }
 .alert-close { background: none; border: none; font-size: 18px; cursor: pointer; color: inherit; opacity: 0.6; }
 
 .loading-spinner { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; gap: 12px; }
@@ -147,8 +147,8 @@
 .btn-follow:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-follow.following {
   background: var(--card);
-  color: #1a6b30;
-  border: 1px solid #b0d8b0;
+  color: #111111;
+  border: 1px solid #d4d4d4;
 }
 .btn-spinner { width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
 

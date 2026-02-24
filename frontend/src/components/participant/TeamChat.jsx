@@ -15,6 +15,9 @@ const TeamChat = ({ team, currentUser }) => {
   const [showOnline, setShowOnline]   = useState(false);
   const [linkInput, setLinkInput]     = useState('');
   const [showLinkModal, setShowLinkModal] = useState(false);
+  const [showDocModal, setShowDocModal] = useState(false);
+  const [docUrl, setDocUrl] = useState('');
+  const [docName, setDocName] = useState('');
   const [unread, setUnread]           = useState(0);
   const [isVisible, setIsVisible]     = useState(true);
 
@@ -22,10 +25,24 @@ const TeamChat = ({ team, currentUser }) => {
   const bottomRef   = useRef(null);
   const typingTimer = useRef(null);
   const token       = localStorage.getItem('token');
+  const myId        = currentUser?.id || currentUser?._id;
 
   const scrollToBottom = useCallback((smooth = true) => {
     bottomRef.current?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' });
   }, []);
+
+  const notifyIncomingMessage = useCallback((msg) => {
+    if (typeof window === 'undefined' || !('Notification' in window)) return;
+    if (Notification.permission !== 'granted') return;
+
+    const sender = msg.senderName?.trim() || 'Teammate';
+    const body = msg.type === 'link'
+      ? `${sender}: sent a link`
+      : `${sender}: ${msg.content || 'New message'}`;
+
+    const n = new Notification(`New message in ${team.name}`, { body });
+    n.onclick = () => window.focus();
+  }, [team.name]);
 
   // Load message history
   useEffect(() => {
@@ -47,6 +64,14 @@ const TeamChat = ({ team, currentUser }) => {
     if (!loading) scrollToBottom(false);
   }, [loading, scrollToBottom]);
 
+  // Request browser notification permission once
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('Notification' in window)) return;
+    if (Notification.permission === 'default') {
+      Notification.requestPermission().catch(() => {});
+    }
+  }, []);
+
   // Setup socket
   useEffect(() => {
     const socket = io(SOCKET_URL, { auth: { token }, transports: ['websocket'] });
@@ -58,7 +83,11 @@ const TeamChat = ({ team, currentUser }) => {
 
     socket.on('new_message', (msg) => {
       setMessages(prev => [...prev, msg]);
-      if (!isVisible) setUnread(u => u + 1);
+      const isMe = msg.sender?.toString() === myId?.toString();
+      if (!isVisible && !isMe) {
+        setUnread(u => u + 1);
+        notifyIncomingMessage(msg);
+      }
       scrollToBottom();
     });
 
@@ -69,7 +98,7 @@ const TeamChat = ({ team, currentUser }) => {
     socket.on('connect_error', () => setError('Real-time connection failed. Messages may be delayed.'));
 
     return () => socket.disconnect();
-  }, [team._id, token, isVisible, scrollToBottom]);
+  }, [team._id, token, isVisible, myId, notifyIncomingMessage, scrollToBottom]);
 
   // Track tab visibility for unread count
   useEffect(() => {
@@ -118,6 +147,22 @@ const TeamChat = ({ team, currentUser }) => {
     setShowLinkModal(false);
   };
 
+  const handleSendDoc = () => {
+    const url = docUrl.trim();
+    const name = docName.trim();
+    if (!url) return;
+    socketRef.current?.emit('send_message', {
+      teamId: team._id,
+      type: 'file',
+      content: url,
+      fileUrl: url,
+      fileName: name || 'Document'
+    });
+    setDocUrl('');
+    setDocName('');
+    setShowDocModal(false);
+  };
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
   };
@@ -144,8 +189,6 @@ const TeamChat = ({ team, currentUser }) => {
     groups[date].push(msg);
     return groups;
   }, {});
-
-  const myId = currentUser?.id || currentUser?._id;
 
   const resolveSenderLabel = (msg) => {
     const senderId = msg.sender?.toString();
@@ -210,12 +253,12 @@ const TeamChat = ({ team, currentUser }) => {
             )}
             <h4 style={{ marginTop: 16 }}>All Members</h4>
             <div className="tc-online-user">
-              <span className="tc-online-dot" style={{ background: onlineUsers.some(u => u.id === (team.leader?._id || team.leader)?.toString()) ? '#22c55e' : '#d1d5db' }} />
+              <span className="tc-online-dot" style={{ background: onlineUsers.some(u => u.id === (team.leader?._id || team.leader)?.toString()) ? '#111111' : '#d1d5db' }} />
               <span>{team.leader?.firstName} {team.leader?.lastName} <em>(Leader)</em></span>
             </div>
             {team.members?.filter(m => m.status === 'Accepted').map((m, i) => (
               <div key={i} className="tc-online-user">
-                <span className="tc-online-dot" style={{ background: onlineUsers.some(u => u.id === m.user?._id?.toString()) ? '#22c55e' : '#d1d5db' }} />
+                <span className="tc-online-dot" style={{ background: onlineUsers.some(u => u.id === m.user?._id?.toString()) ? '#111111' : '#d1d5db' }} />
                 <span>{m.user?.firstName} {m.user?.lastName}</span>
               </div>
             ))}
@@ -271,6 +314,7 @@ const TeamChat = ({ team, currentUser }) => {
       {/* Input area */}
       <div className="tc-input-area">
         <button className="tc-attach-btn" title="Share link" onClick={() => setShowLinkModal(true)}>Share</button>
+        <button className="tc-attach-btn" title="Share document link" onClick={() => setShowDocModal(true)}>Doc</button>
         <textarea
           className="tc-input"
           value={input}
@@ -296,6 +340,36 @@ const TeamChat = ({ team, currentUser }) => {
             <div className="tc-modal-actions">
               <button className="tc-cancel-btn" onClick={() => setShowLinkModal(false)}>Cancel</button>
               <button className="tc-send-link-btn" onClick={handleSendLink} disabled={!linkInput.trim()}>Share</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Document modal */}
+      {showDocModal && (
+        <div className="tc-modal-overlay" onClick={() => setShowDocModal(false)}>
+          <div className="tc-modal" onClick={e => e.stopPropagation()}>
+            <h4>Share a Document</h4>
+            <input
+              type="text"
+              className="tc-link-input"
+              value={docName}
+              onChange={e => setDocName(e.target.value)}
+              placeholder="Document name (optional)"
+              style={{ marginBottom: 8 }}
+            />
+            <input
+              type="url"
+              className="tc-link-input"
+              value={docUrl}
+              onChange={e => setDocUrl(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSendDoc()}
+              placeholder="https://..."
+              autoFocus
+            />
+            <div className="tc-modal-actions">
+              <button className="tc-cancel-btn" onClick={() => setShowDocModal(false)}>Cancel</button>
+              <button className="tc-send-link-btn" onClick={handleSendDoc} disabled={!docUrl.trim()}>Share</button>
             </div>
           </div>
         </div>

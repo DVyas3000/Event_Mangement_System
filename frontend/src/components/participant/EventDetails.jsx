@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { participantAPI, teamAPI } from '../../services/api';
+import TeamChat from './TeamChat';
 import './EventDetails.css';
 
 // ─────────────────────────────────────────────────────────────
@@ -21,6 +22,8 @@ const TeamRegistrationModal = ({ event, onClose, onSuccess }) => {
   // join-team form
   const [inviteCode, setInviteCode] = useState('');
   const [preview, setPreview]       = useState(null);
+  const [showChat, setShowChat]     = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const fetchMyTeam = useCallback(async () => {
     setLoadingTeam(true);
@@ -38,6 +41,15 @@ const TeamRegistrationModal = ({ event, onClose, onSuccess }) => {
   useEffect(() => { 
     fetchMyTeam(); 
   }, [fetchMyTeam]);
+
+  useEffect(() => {
+    try {
+      const userStr = localStorage.getItem('user');
+      if (userStr) setCurrentUser(JSON.parse(userStr));
+    } catch (err) {
+      console.error('Error parsing user from localStorage:', err);
+    }
+  }, []);
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -174,8 +186,22 @@ const TeamRegistrationModal = ({ event, onClose, onSuccess }) => {
                 )}
 
                 {myTeam.status === 'Complete' && (
-                  <div className="team-complete-banner">
-                    Team is complete! Tickets have been sent to all member's emails.
+                  <div>
+                    <div className="team-complete-banner">
+                      Team is complete! Tickets have been sent to all member's emails.
+                    </div>
+                    <button
+                      className="btn-register"
+                      style={{ width: '100%', marginTop: 12 }}
+                      onClick={() => setShowChat(s => !s)}
+                    >
+                      {showChat ? 'Hide Team Chat' : 'Open Team Chat'}
+                    </button>
+                    {showChat && currentUser && (
+                      <div style={{ marginTop: 16 }}>
+                        <TeamChat team={myTeam} currentUser={currentUser} />
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -308,7 +334,7 @@ const TeamRegistrationModal = ({ event, onClose, onSuccess }) => {
                         Leader: {preview.leader?.firstName} {preview.leader?.lastName}
                       </p>
                       {preview.status !== 'Forming' && (
-                        <p style={{ marginTop: 6, fontSize: 12, color: '#b00000', fontWeight: 600 }}>
+                        <p style={{ marginTop: 6, fontSize: 12, color: '#111111', fontWeight: 600 }}>
                           This team is no longer accepting members.
                         </p>
                       )}
@@ -582,16 +608,16 @@ const EventDetails = () => {
               style={{
                 background:
                   event.type === 'Merchandise'
-                    ? '#fef3c7'
+                    ? '#f0f0f0'
                     : isHackathon
-                    ? '#ede9fe'
-                    : '#dbeafe',
+                    ? '#f0f0f0'
+                    : '#f0f0f0',
                 color:
                   event.type === 'Merchandise'
-                    ? '#92400e'
+                    ? '#111111'
                     : isHackathon
-                    ? '#5b21b6'
-                    : '#1e40af'
+                    ? '#111111'
+                    : '#111111'
               }}
             >
               {event.type}

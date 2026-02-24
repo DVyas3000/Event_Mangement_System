@@ -68,28 +68,16 @@ const Clubs = () => {
 
   const isFollowing = (clubId) => followedClubs.includes(clubId);
 
-  const getCategoryIcon = (category) => {
-    const icons = {
-      Technical: '',
-      Cultural: '',
-      Sports: '',
-      Social: '',
-      Academic: '',
-      Other: ''
-    };
-    return icons[category];
-  };
-
   const getCategoryColor = (category) => {
     const colors = {
-      Technical: '#3b82f6',
-      Cultural: '#ec4899',
-      Sports: '#10b981',
-      Social: '#f59e0b',
-      Academic: '#8b5cf6',
-      Other: '#6b7280'
+      Technical: '#111111',
+      Cultural: '#111111',
+      Sports: '#111111',
+      Social: '#111111',
+      Academic: '#111111',
+      Other: '#666666'
     };
-    return colors[category] || '#6b7280';
+    return colors[category] || '#666666';
   };
 
   if (loading) {
@@ -107,7 +95,7 @@ const Clubs = () => {
     <div className="clubs-page">
       <nav className="clubs-navbar">
         <button onClick={() => navigate('/participant/dashboard')} className="btn-back">
-           Back to Dashboard
+           Back
         </button>
         <h1>Clubs & Organizers</h1>
         <div className="following-count">
@@ -136,20 +124,6 @@ const Clubs = () => {
 
               return (
                 <div key={club._id} className="club-card">
-                  {/* Icon */}
-                  <div
-                    className="club-icon"
-                    style={{
-                      background: `linear-gradient(135deg, ${getCategoryColor(
-                        club.category
-                      )}22, ${getCategoryColor(club.category)}44)`
-                    }}
-                  >
-                    <span style={{ fontSize: '2.5rem' }}>
-                      {getCategoryIcon(club.category)}
-                    </span>
-                  </div>
-
                   {/* Info */}
                   <div className="club-content">
                     <h3>{club.name}</h3>

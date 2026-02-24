@@ -106,8 +106,8 @@
   font-size: 13px;
   border: 1px solid;
 }
-.alert-error { background: #fafafa; color: #b00000; border-color: #e8c0c0; border-left: 3px solid #b00000; }
-.alert-success { background: #fafafa; color: #1a6b30; border-color: #b0d8b0; border-left: 3px solid #1a6b30; }
+.alert-error { background: #fafafa; color: #111111; border-color: #d4d4d4; border-left: 3px solid #111111; }
+.alert-success { background: #fafafa; color: #111111; border-color: #d4d4d4; border-left: 3px solid #111111; }
 
 @media (max-width: 768px) {
   .profile-content { flex-direction: column; padding: 16px; }

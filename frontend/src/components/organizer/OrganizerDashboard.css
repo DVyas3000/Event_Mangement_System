@@ -34,7 +34,7 @@
 }
 .od-nav-link.active { background: #f0f0f0; color: #111111; font-weight: 700; }
 .od-nav-logout {
-  background: rgba(202, 114, 114, 0.849);
+  background: rgba(0, 0, 0, 0.85);
   color: #ffffff;
   padding: 5px 12px;
   border-radius: 2px;
@@ -60,8 +60,8 @@
   font-size: 13px;
   border: 1px solid;
 }
-.od-alert-error { background: #fafafa; color: #b00000; border-color: #e8c0c0; border-left: 3px solid #b00000; }
-.od-alert-success { background: #fafafa; color: #1a6b30; border-color: #b0d8b0; border-left: 3px solid #1a6b30; }
+.od-alert-error { background: #fafafa; color: #111111; border-color: #d4d4d4; border-left: 3px solid #111111; }
+.od-alert-success { background: #fafafa; color: #111111; border-color: #d4d4d4; border-left: 3px solid #111111; }
 
 /* Hero banner */
 .od-hero {
@@ -129,10 +129,10 @@
   border: 1px solid;
 }
 .od-badge-type { background: #f0f0f0; color: #333333; border-color: #d4d4d4; }
-.badge-upcoming { background: #f0fdf0; color: #1a6b30; border-color: #b0d8b0; }
-.badge-ongoing  { background: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+.badge-upcoming { background: #f0f0f0; color: #111111; border-color: #d4d4d4; }
+.badge-ongoing  { background: #f0f0f0; color: #111111; border-color: #d4d4d4; }
 .badge-closed   { background: #f5f5f5; color: #555555; border-color: #d4d4d4; }
-.badge-draft    { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+.badge-draft    { background: #f0f0f0; color: #111111; border-color: #d4d4d4; }
 .badge-published { background: #f0f0f0; color: #111111; border-color: #d4d4d4; }
 
 .od-edit-btn {
@@ -179,7 +179,7 @@
 
 .od-team-sub {
   margin: 6px 0 0;
-  color: #6b7280;
+  color: #666666;
   font-size: 13px;
 }
 
@@ -205,14 +205,14 @@
 
 .od-team-meta-label {
   font-size: 12px;
-  color: #6b7280;
+  color: #666666;
   margin-bottom: 6px;
   font-weight: 600;
 }
 
 .od-team-meta-value {
   font-size: 14px;
-  color: #111827;
+  color: #111111;
   font-weight: 700;
 }
 
@@ -227,7 +227,7 @@
   font-size: 15px;
   font-weight: 800;
   letter-spacing: 1px;
-  background: #111827;
+  background: #111111;
   color: #fff;
   padding: 8px 10px;
   border-radius: 10px;
@@ -236,7 +236,7 @@
 
 .od-team-code-hint {
   font-size: 12px;
-  color: #6b7280;
+  color: #666666;
 }
 
 .od-team-members {
@@ -256,7 +256,7 @@
   font-weight: 700;
   border: 1px solid rgba(0,0,0,0.08);
   background: #fff;
-  color: #111827;
+  color: #111111;
 }
 
 .od-chip-dot {
@@ -265,21 +265,21 @@
 }
 
 .od-chip-leader {
-  background: #111827;
-  border-color: #111827;
+  background: #111111;
+  border-color: #111111;
   color: #fff;
 }
 
 .od-chip-accepted {
-  background: rgba(16, 185, 129, 0.12);
-  border-color: rgba(16, 185, 129, 0.25);
-  color: #065f46;
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #111111;
 }
 
 .od-chip-pending {
-  background: rgba(245, 158, 11, 0.12);
-  border-color: rgba(245, 158, 11, 0.25);
-  color: #92400e;
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #111111;
 }
 
 /* Mobile */
@@ -393,7 +393,7 @@
   position: absolute;
   width: 28px;
   height: 28px;
-  border-color: #22c55e;
+  border-color: #111111;
   border-style: solid;
   border-width: 0;
   border-radius: 2px;
@@ -411,12 +411,12 @@
   height: 2px;
   background: linear-gradient(90deg,
     transparent 0%,
-    rgba(34,197,94,0.6) 20%,
-    #22c55e 50%,
-    rgba(34,197,94,0.6) 80%,
+    rgba(255,255,255,0.55) 20%,
+    #111111 50%,
+    rgba(255,255,255,0.55) 80%,
     transparent 100%);
   border-radius: 999px;
-  box-shadow: 0 0 8px 2px rgba(34,197,94,0.5);
+  box-shadow: 0 0 8px 2px rgba(255,255,255,0.45);
   animation: qrLaser 1.8s ease-in-out infinite;
 }
 @keyframes qrLaser {

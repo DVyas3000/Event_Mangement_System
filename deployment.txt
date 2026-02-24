@@ -1,0 +1,3 @@
+Frontend URL: https://event-mangement-system-2.onrender.com
+Backend URL: https://event-mangement-system-1.onrender.com
+Database: MongoDB Atlas (felicity cluster, connection via MONGODB_URI environment variable)

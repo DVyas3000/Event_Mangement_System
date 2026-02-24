@@ -1,13 +1,13 @@
 :root {
-  --bg: #fdf6ff;
+  --bg: #f5f5f5;
   --card: #ffffff;
-  --primary: #c084fc;
-  --secondary: #f9a8d4;
-  --accent: #86efac;
-  --text: #4a4a6a;
-  --border: #e9d5ff;
-  --hover-border: #c084fc;
-  --heading: #7c3aed;
+  --primary: #111111;
+  --secondary: #1f1f1f;
+  --accent: #e5e5e5;
+  --text: #333333;
+  --border: #d4d4d4;
+  --hover-border: #111111;
+  --heading: #111111;
 }
 
 /* TeamRegistration.css */
@@ -87,15 +87,15 @@
 }
 
 .tr-alert-error {
-  background: #fee;
-  border: 1px solid #fcc;
-  color: #c00;
+  background: #f0f0f0;
+  border: 1px solid #d4d4d4;
+  color: #111111;
 }
 
 .tr-alert-success {
-  background: #efe;
-  border: 1px solid #cfc;
-  color: #090;
+  background: #f0f0f0;
+  border: 1px solid #d4d4d4;
+  color: #111111;
 }
 
 /* Choice Screen */
@@ -157,7 +157,7 @@
 
 .tr-btn-accept {
   padding: 10px 20px;
-  background: #197c3a;
+  background: #111111;
   color: #fff;
   border: none;
   border-radius: 3px;
@@ -170,7 +170,7 @@
 
 .tr-btn-decline {
   padding: 10px 20px;
-  background: #b00000;
+  background: #111111;
   color: #fff;
   border: none;
   border-radius: 3px;
@@ -266,18 +266,18 @@
 }
 
 .tr-status-forming {
-  background: #fff3cd;
-  color: #856404;
+  background: #f0f0f0;
+  color: #111111;
 }
 
 .tr-status-complete {
-  background: #d4edda;
-  color: #155724;
+  background: #f0f0f0;
+  color: #111111;
 }
 
 .tr-status-cancelled {
-  background: #f8d7da;
-  color: #721c24;
+  background: #f0f0f0;
+  color: #111111;
 }
 
 .tr-status-leader {
@@ -286,18 +286,18 @@
 }
 
 .tr-status-accepted {
-  background: #d4edda;
-  color: #155724;
+  background: #f0f0f0;
+  color: #111111;
 }
 
 .tr-status-pending {
-  background: #fff3cd;
-  color: #856404;
+  background: #f0f0f0;
+  color: #111111;
 }
 
 .tr-status-declined {
-  background: #f8d7da;
-  color: #721c24;
+  background: #f0f0f0;
+  color: #111111;
 }
 
 /* Invite Box */
@@ -406,9 +406,9 @@
 
 /* Complete Message */
 .tr-complete-msg {
-  background: #d4edda;
-  border: 1px solid #c3e6cb;
-  color: #155724;
+  background: #f0f0f0;
+  border: 1px solid #d4d4d4;
+  color: #111111;
   padding: 14px 16px;
   margin-top: 20px;
   border-radius: 3px;

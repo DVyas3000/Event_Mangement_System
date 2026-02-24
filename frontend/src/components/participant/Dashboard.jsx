@@ -95,22 +95,22 @@ const ParticipantDashboard = () => {
 
   const getStatusColor = (status) => {
     const colors = {
-      Registered: '#6f7fc6',
-      Approved:   '#5f9a79',
-      Pending:    '#b98b59',
-      Rejected:   '#b26a75',
-      Cancelled:  '#8d86a0',
-      Closed:     '#8d86a0',
-      Completed:  '#7e68a8',
-      Forming:    '#b98b59'
+      Registered: '#111111',
+      Approved:   '#111111',
+      Pending:    '#111111',
+      Rejected:   '#111111',
+      Cancelled:  '#333333',
+      Closed:     '#333333',
+      Completed:  '#333333',
+      Forming:    '#111111'
     };
-    return colors[status] || '#6b7280';
+    return colors[status] || '#333333';
   };
 
   const getTypeBadgeStyle = (type) => {
-    if (type === 'Merchandise') return { background: '#faefd9', color: '#7e6849' };
-    if (type === 'Hackathon')   return { background: '#ece4fa', color: '#695687' };
-    return { background: '#e1ecfa', color: '#54688b' };
+    if (type === 'Merchandise') return { background: '#f0f0f0', color: '#333333' };
+    if (type === 'Hackathon')   return { background: '#f0f0f0', color: '#333333' };
+    return { background: '#f0f0f0', color: '#333333' };
   };
 
   //  Event card 
